@@ -61,7 +61,7 @@ use(
 set(
     'view engine', 'pug',
     'token', 123
-);
+)(app);
 ```
 
 If a path is necessary, you can pass the path and the middleware within an array:

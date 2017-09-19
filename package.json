@@ -1,6 +1,6 @@
 {
   "name": "express-shortcut",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Shortcut of Express app.use and app.set",
   "main": "index.js",
   "scripts": {

@@ -4,25 +4,26 @@ const assert = require('assert')
     , express = require('express')
     , app = express()
     , request = require('supertest')(app)
-    , { use, set } = require('../index');
+    , shortcut = require('../index')(app);
 
 describe('shortcut use', () => {
 
-    use(
-        (req, res, next) => {
-    
-            req.firstMiddleware = 'FIRST';
-            next();
-        },
-        (req, res, next) => {
-            req.secondMiddleware = 'SECOND';
-            next();
-        },
-        ['/test', (req, res, next) => {
-            req.pathLessMiddleware  = 'PATHLESS';
-            next();
-        }]
-    )(app);
+    shortcut
+        .use(
+            (req, res, next) => {
+
+                req.firstMiddleware = 'FIRST';
+                next();
+            },
+            (req, res, next) => {
+                req.secondMiddleware = 'SECOND';
+                next();
+            },
+            ['/test', (req, res, next) => {
+                req.pathLessMiddleware  = 'PATHLESS';
+                next();
+            }]
+        );
 
     app.get('/', (req, res) => 
         res.status(200)
@@ -51,10 +52,11 @@ describe('shortcut set', () => {
 
     const setValue1 = new Date();
     const setValue2 = { name: 'shortcut'};
-    set(
+    
+    shortcut.set(
         'variable1', setValue1,
         'variable2', setValue2
-    )(app);
+    );
 
     it('shout set two variables', done => {
         assert.equal(app.get('variable1'), setValue1);

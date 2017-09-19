@@ -45,9 +45,9 @@ const express = require('express')
     , cookieParser = require('cookie-parser')
     , session = require('express-session')
     , passport = require('passport')
-    , { use, set }  = require('express-shortcut');
+    , shortcut  = require('express-shortcut')(app);
 
-use(
+shortcut.use(
     cookieParser(),
     session(
         { secret: 'homem avestruz', 
@@ -56,18 +56,18 @@ use(
         }
     ),
     passport.session(),
-)(app);
+);
 
-set(
+shortcut.set(
     'view engine', 'pug',
     'token', 123
-)(app);
+);
 ```
 
 If a path is necessary, you can pass the path and the middleware within an array:
 
 ```javascript
-use(
+shortcut.use(
     ['/api', yourMiddleware],
     cookieParser(),
     session(
@@ -77,7 +77,7 @@ use(
         }
     ),
     passport.session()
-)(app);
+);
 ```
 
 
